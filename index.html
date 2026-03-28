@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just Fun</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at 20% 20%, #1a1c3a, #05060f);
+    color:#fff;
+}
+
+/* CARD */
+.card{
+    width:380px;
+    padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    box-shadow:0 0 40px rgba(0,0,0,0.5);
+    text-align:center;
+}
+
+.title{
+    font-size:30px;
+    margin-bottom:20px;
+    background:linear-gradient(90deg,#7b5cff,#ff7eb3);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* TABS */
+.tabs{
+    display:flex;
+    margin-bottom:20px;
+    background:#0f1125;
+    border-radius:10px;
+}
+
+.tabs button{
+    flex:1;
+    padding:10px;
+    border:none;
+    background:none;
+    color:#aaa;
+    cursor:pointer;
+}
+
+.tabs .active{
+    background:linear-gradient(90deg,#7b5cff,#ff7eb3);
+    color:#fff;
+    border-radius:10px;
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    background:#0f1125;
+    color:#fff;
+}
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#7b5cff,#ff7eb3);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.hidden{
+    display:none;
+}
+
+/* DASHBOARD */
+
+.dashboard h1{
+    margin-bottom:15px;
+}
+
+/* GRID */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+article{
+    background:rgba(255,255,255,0.05);
+    padding:12px;
+    border-radius:12px;
+    backdrop-filter:blur(15px);
+}
+
+article h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+article p{
+    font-size:12px;
+    color:#ccc;
+}
+
+article img{
+    width:100%;
+    border-radius:10px;
+    margin-top:8px;
+}
+
+.logout-btn{
+    margin-top:15px;
+    background:linear-gradient(90deg,#ff4b5c,#ff7eb3);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<!-- AUTH SECTION -->
+<div id="authSection">
+
+<div class="title">Just Fun</div>
+
+<div class="tabs">
+<button id="loginTab" class="active" onclick="showLogin()">Login</button>
+<button id="regTab" onclick="showRegister()">Register</button>
+</div>
+
+<!-- LOGIN -->
+<div id="loginBox">
+<input type="text" id="loginUser" placeholder="Username">
+<input type="password" id="loginPass" placeholder="Password">
+<button class="btn" onclick="login()">Sign In</button>
+</div>
+
+<!-- REGISTER -->
+<div id="registerBox" class="hidden">
+<input type="text" id="regUser" placeholder="Username">
+<input type="password" id="regPass" placeholder="Password">
+<input type="password" id="confirmPass" placeholder="Confirm Password">
+<button class="btn" onclick="register()">Create Account</button>
+</div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden dashboard">
+
+<h1>🔥 Welcome <span id="userText"></span></h1>
+
+<div class="dashboard-grid">
+
+<article>
+<h3>Life on Mars</h3>
+<p>Little wonder loops endlessly here.</p>
+<img src="https://i.pinimg.com/1200x/1c/a8/5a/1ca85ad7d0627be513a1d3ee9613e12e.jpg">
+</article>
+
+<article>
+<h3>Whispers</h3>
+<p>Signal lost, only whispers remain.</p>
+<img src="https://i.pinimg.com/1200x/2e/cb/6f/2ecb6f7091e8c0d97bb0a9e1073ba744.jpg">
+</article>
+
+<article>
+<h3>Signal Lost</h3>
+<p>Trapped in static dreams.</p>
+<img src="https://i.pinimg.com/1200x/86/c7/6b/86c76b5e15bf75faa9e2a3185141bd3b.jpg">
+</article>
+
+<article>
+<h3>Game</h3>
+<p>Pixels in kabuki.</p>
+<img src="https://i.pinimg.com/1200x/5c/d7/77/5cd777ad0caadfb77dc3a1a0ef38739e.jpg">
+</article>
+
+</div>
+
+<button class="btn logout-btn" onclick="logout()">Logout</button>
+
+</div>
+
+</div>
+
+<script>
+
+function showRegister(){
+
+loginBox.classList.add('hidden');
+registerBox.classList.remove('hidden');
+
+loginTab.classList.remove('active');
+regTab.classList.add('active');
+
+}
+
+function showLogin(){
+
+registerBox.classList.add('hidden');
+loginBox.classList.remove('hidden');
+
+regTab.classList.remove('active');
+loginTab.classList.add('active');
+
+}
+
+function register(){
+
+let user = regUser.value;
+let pass = regPass.value;
+let confirm = confirmPass.value;
+
+if(pass !== confirm){
+alert("❌ Password not match!");
+return;
+}
+
+localStorage.setItem("user",user);
+localStorage.setItem("pass",pass);
+
+alert("✅ Account Created!");
+showLogin();
+
+}
+
+function login(){
+
+let user = loginUser.value;
+let pass = loginPass.value;
+
+let savedUser = localStorage.getItem("user");
+let savedPass = localStorage.getItem("pass");
+
+if(user === savedUser && pass === savedPass){
+
+authSection.classList.add("hidden");
+dashboard.classList.remove("hidden");
+
+userText.innerText = user;
+
+}else{
+
+alert("❌ Wrong login!");
+
+}
+
+}
+
+function logout(){
+
+dashboard.classList.add("hidden");
+authSection.classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
+
